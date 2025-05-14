@@ -102,12 +102,14 @@
         <div class="controls">
             <button id="addBtn">Add</button>
             <button id="insertBtn">Insert</button>
-            <input type="number" id="insertPos" min="0" value="0" placeholder="Position">
+            <input type="number" id="insertPos" min="0" value="2" placeholder="Position">
             <button id="removeBtn">Remove</button>
-            <input type="number" id="removePos" min="0" value="0" placeholder="Position">
+            <input type="number" id="removePos" min="0" value="2" placeholder="Position">
             <button id="moveBtn">Move</button>
-            <input type="number" id="moveFrom" min="0" value="0" placeholder="From Position">
-            <input type="number" id="moveTo" min="0" value="1" placeholder="To Position">
+            from
+            <input type="number" id="moveFrom" min="0" value="3" placeholder="From Position">
+            to
+            <input type="number" id="moveTo" min="0" value="0" placeholder="To Position">
             <button id="clearBtn">Clear</button>
         </div>
 
@@ -184,7 +186,7 @@
             document.getElementById('clearBtn').addEventListener('click', async () => {
                 updateStatus('Clearing all items...');
                 await listView.clear();
-                updateStatus('Clear complete. Item count: ${listView.getCount()}');
+                updateStatus(`Clear complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
 
