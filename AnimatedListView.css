@@ -1,0 +1,155 @@
+/* This file contains the CSS styles for the AnimatedListView component */
+
+/* List view styles */
+.listview-container {
+    box-sizing: border-box;
+    border: 1px solid dimgray;
+    background-color: darkgrey;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Styles for elements under the list view */
+.listview-container * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Basic style for items */
+.listview-container .listview-item {
+    height: 60px;
+    width: 100%;
+    background-image: linear-gradient(0deg, #cccccc, #eeeeee);
+    display: flex;
+    align-items: center;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Style when an item is selected */
+.listview-container .listview-item.selected {
+    background-color: #eeeeff;
+    background-image: linear-gradient(0deg, #ccccdd, #eeeeff);
+}
+
+/* Style when an item is being added */
+.listview-container .listview-item.appearing {
+    animation-name: appear;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+/* Style when an item is being removed */
+.listview-container .listview-item.disappearing {
+    animation-name: disappear;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+/* Style when an item is being moved (extracted) */
+.listview-container .listview-item.extracted {
+    animation-name: extract;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+/* Style when an item is being moved (inserted) */
+.listview-container .listview-item.inserting {
+    animation-name: insert;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+/* Style for empty rows when an item is being added */
+.listview-container .row-expanding {
+    overflow: hidden;
+    transition-property: height;
+    transition-duration: 0.5s;
+    /* Transition duration (same as .row-collapsing) */
+    transition-timing-function: ease;
+    background-color: transparent;
+    background-image: none;
+}
+
+/* Style for empty rows when an item is being removed */
+.listview-container .row-collapsing {
+    overflow: hidden;
+    transition-property: height;
+    transition-duration: 0.5s;
+    /* Transition duration (same as .row-expanding) */
+    transition-timing-function: ease;
+    background-color: transparent;
+    background-image: none;
+}
+
+/* Temporary container style for moving items */
+.listview-container .fixed-container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+/* Style for empty items */
+.listview-container .empty-row {
+    background-color: transparent;
+    background-image: none;
+}
+
+/* Animation when an item is being added */
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animation when an item is being removed */
+@keyframes disappear {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(0);
+    }
+}
+
+/* Animation when an item is being moved (extracted) */
+@keyframes extract {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Animation when an item is being moved (inserted) */
+@keyframes insert {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
