@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アニメーション付きリストビュー</title>
+    <title>Animated List View</title>
     <style>
         * {
             box-sizing: border-box;
@@ -78,7 +78,7 @@
             font-family: monospace;
         }
 
-        /* リストビューのスタイル */
+        /* List view styles */
         .list-container {
             box-sizing: border-box;
             border: 1px solid dimgray;
@@ -89,14 +89,14 @@
             position: relative;
         }
 
-        /* リストビュー以下の要素のスタイル */
+        /* Styles for elements under the list view */
         .list-container * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* 項目の基本スタイル */
+        /* Basic style for items */
         .list-container .list-item {
             height: 60px;
             width: 100%;
@@ -108,13 +108,13 @@
             overflow: hidden;
         }
 
-        /* 項目が選択されているときのスタイル */
+        /* Style when an item is selected */
         .list-container .list-item.selected {
             background-color: #eeeeff;
             background-image: linear-gradient(0deg, #ccccdd , #eeeeff);
         }
 
-        /* 項目が追加されるときのスタイル */
+        /* Style when an item is being added */
         .list-container .list-item.appearing {
             animation-name: appear;
             animation-duration: 0.5s;
@@ -122,7 +122,7 @@
             animation-fill-mode: forwards;
         }
 
-        /* 項目が削除されるときのスタイル */
+        /* Style when an item is being removed */
         .list-container .list-item.disappearing {
             animation-name: disappear;
             animation-duration: 0.5s;
@@ -130,7 +130,7 @@
             animation-fill-mode: forwards;
         }
 
-        /* 項目が移動(引き抜かれる)ときのスタイル */
+        /* Style when an item is being moved (extracted) */
         .list-container .list-item.extracted {
             animation-name: extract;
             animation-duration: 0.5s;
@@ -138,7 +138,7 @@
             animation-fill-mode: forwards;
         }
 
-        /* 項目が移動(差し込む)ときのスタイル */
+        /* Style when an item is being moved (inserted) */
         .list-container .list-item.inserting {
             animation-name: insert;
             animation-duration: 0.5s;
@@ -146,29 +146,29 @@
             animation-fill-mode: forwards;
         }
 
-        /* 項目が追加される時の空行のスタイル */
+        /* Style for empty rows when an item is being added */
         .list-container .row-expanding {
             overflow: hidden;
             transition-property: height;
             transition-duration: 0.5s;
-            /* トランジションの時間(.row-collapsingと同じ) */
+            /* Transition duration (same as .row-collapsing) */
             transition-timing-function: ease;
             background-color: transparent;
             background-image: none;
         }
 
-        /* 項目が削除される時の空行のスタイル */
+        /* Style for empty rows when an item is being removed */
         .list-container .row-collapsing {
             overflow: hidden;
             transition-property: height;
             transition-duration: 0.5s;
-            /* トランジションの時間(.row-expandingと同じ) */
+            /* Transition duration (same as .row-expanding) */
             transition-timing-function: ease;
             background-color: transparent;
             background-image: none;
         }
 
-        /* 項目移動用の仮設コンテナのスタイル */
+        /* Temporary container style for moving items */
         .list-container .fixed-container {
             overflow: hidden;
             display: flex;
@@ -176,13 +176,13 @@
             padding: 0;
         }
 
-        /* 空の項目のスタイル */
+        /* Style for empty items */
         .list-container .empty-row {
             background-color: transparent;
             background-image: none;
         }
 
-        /* 項目が追加されるときのアニメーション */
+        /* Animation when an item is being added */
         @keyframes appear {
             from {
                 opacity: 0;
@@ -195,7 +195,7 @@
             }
         }
 
-        /* 項目が削除されるときのアニメーション */
+        /* Animation when an item is being removed */
         @keyframes disappear {
             from {
                 opacity: 1;
@@ -208,7 +208,7 @@
             }
         }
 
-        /* 項目が移動されるときのアニメーション(引き抜く) */
+        /* Animation when an item is being moved (extracted) */
         @keyframes extract {
             0% {
                 transform: translateX(0);
@@ -220,7 +220,7 @@
             }
         }
 
-        /* 項目が移動されるときのアニメーション(差し込む) */
+        /* Animation when an item is being moved (inserted) */
         @keyframes insert {
             0% {
                 opacity: 0;
@@ -237,323 +237,323 @@
 
 <body>
     <div class="container">
-        <h1>アニメーション付きリストビュー</h1>
+        <h1>Animated List View</h1>
 
         <div class="controls">
-            <button id="addBtn">追加</button>
-            <button id="insertBtn">挿入</button>
-            <input type="number" id="insertPos" min="0" value="0" placeholder="位置">
-            <button id="removeBtn">削除</button>
-            <input type="number" id="removePos" min="0" value="0" placeholder="位置">
-            <button id="moveBtn">移動</button>
-            <input type="number" id="moveFrom" min="0" value="0" placeholder="元位置">
-            <input type="number" id="moveTo" min="0" value="1" placeholder="先位置">
+            <button id="addBtn">Add</button>
+            <button id="insertBtn">Insert</button>
+            <input type="number" id="insertPos" min="0" value="0" placeholder="Position">
+            <button id="removeBtn">Remove</button>
+            <input type="number" id="removePos" min="0" value="0" placeholder="Position">
+            <button id="moveBtn">Move</button>
+            <input type="number" id="moveFrom" min="0" value="0" placeholder="From Position">
+            <input type="number" id="moveTo" min="0" value="1" placeholder="To Position">
         </div>
 
         <div id="listView">
-            <!-- リストビューの内容がここに表示されます -->
+            <!-- The content of the list view will be displayed here -->
         </div>
 
-        <div class="status" id="status">ステータス: 準備完了</div>
+        <div class="status" id="status">Status: Ready</div>
     </div>
 
     <script>
         /**
-         * AnimatedListViewクラス
-         * アニメーション付きのリストビューを提供するクラス
+         * AnimatedListView class
+         * A class that provides an animated list view
          */
         class AnimatedListView {
-            // プライベートフィールド
-            #container;             // リストビューを表示するコンテナ
-            #items = [];            // リストの項目を格納する配列
-            #itemHeight;            // 項目の高さ
-            #animationQueue;        // アニメーションの待ち行列
-            #isSelectable = false;  // 選択可能かどうかのフラグ
-            #selectionChangedCallback; // 選択状態が変更されたときのコールバック
+            // Private fields
+            #container;             // Container to display the list view
+            #items = [];            // Array to store list items
+            #itemHeight;            // Height of an item
+            #animationQueue;        // Animation queue
+            #isSelectable = false;  // Flag to indicate if items are selectable
+            #selectionChangedCallback; // Callback when selection state changes
 
             /**
-             * コンストラクタ
-             * @param {string} containerId リストビューを表示するコンテナのID
+             * Constructor
+             * @param {string} containerId ID of the container to display the list view
              */
             constructor(containerId, isSelectable = false, selectionChangedCallback = null) {
-                // コンテナ要素を取得
+                // Get the container element
                 this.#container = document.getElementById(containerId);
                 if (!this.#container) {
                     throw new Error(`Container with ID '${containerId}' not found.`);
                 }
 
-                // 選択可能かどうかのフラグを設定
+                // Set the flag for whether items are selectable
                 this.#isSelectable = isSelectable;
 
-                // 選択状態が変更されたときのコールバックを設定
+                // Set the callback for when the selection state changes
                 this.#selectionChangedCallback = selectionChangedCallback;
 
-                // コンテナのスタイルを設定
+                // Set the style of the container
                 this.#container.classList.add('list-container');
 
-                // 項目の高さを測定
-                // 空の行を作成して挿入
+                // Measure the height of an item
+                // Create and insert an empty row
                 let item = AnimatedListView.#createEmptyRow();
                 this.#container.appendChild(item);
-                // 高さを取得
+                // Get the height
                 this.#itemHeight = item.offsetHeight;
-                // 空の行を削除
+                // Remove the empty row
                 this.#container.removeChild(item);
 
-                // アニメーションの待ち行列を初期化
+                // Initialize the animation queue
                 this.#animationQueue = new AnimatedListView.#TicketQueue();
             }
 
             /**
-             * 指定した要素をリストの末尾に追加
-             * @param {HTMLElement} element 追加する要素
-             * @returns {Promise} アニメーションが完了するまでのPromise
+             * Add the specified element to the end of the list
+             * @param {HTMLElement} element The element to add
+             * @returns {Promise} A promise that resolves when the animation is complete
              */
             async add(element) {
-                // 項目を作成
+                // Create an item
                 const item = this.#createItem(element);
 
-                // 項目リストを更新
+                // Update the item list
                 this.#items.push(item);
 
-                // 待ち行列に参加して自分の番を待つ
+                // Join the queue and wait for your turn
                 const ticket = this.#animationQueue.join();
                 await this.#animationQueue.waitForMyTurn(ticket);
 
-                // 新しい要素をリストに追加
+                // Add the new element to the list
                 item.node.classList.add('appearing');
                 this.#container.appendChild(item.node);
 
-                // アニメーション時間を取得
+                // Get the animation duration
                 var animationDuration = AnimatedListView.#getAnimationDuration(item.node);
 
-                // アニメーションが完了するのを待つ
+                // Wait for the animation to complete
                 return new Promise(resolve => {
                     setTimeout(() => {
-                        // アニメーションを終了
+                        // End the animation
                         item.node.classList.remove('appearing');
-                        // 待ち行列から離脱
+                        // Leave the queue
                         this.#animationQueue.leave(ticket);
-                        // 解決
+                        // Resolve
                         resolve();
                     }, animationDuration);
                 });
             }
 
             /**
-             * 指定した要素を指定した位置に挿入
-             * @param {HTMLElement} element 挿入する要素
-             * @param {number} position 挿入する位置
-             * @returns {Promise} アニメーションが完了するまでのPromise
+             * Insert the specified element at the specified position
+             * @param {HTMLElement} element The element to insert
+             * @param {number} position The position to insert at
+             * @returns {Promise} A promise that resolves when the animation is complete
              */
             async insert(element, position) {
-                // 位置を有効範囲内に制限
+                // Restrict the position to the valid range
                 position = Math.max(0, Math.min(position, this.#items.length));
 
-                // 末尾ならaddに振り替える
+                // If the position is at the end, delegate to add
                 if (position >= this.#items.length) {
                     return this.add(element);
                 }
 
-                // 項目を作成
+                // Create an item
                 const item = this.#createItem(element);
 
-                // 挿入位置の要素を取得
+                // Get the element at the insertion position
                 const refElement = this.#items[position].node;
 
-                // 項目リストを更新
+                // Update the item list
                 this.#items.splice(position, 0, item);
 
-                // 待ち行列に参加して自分の番を待つ
+                // Join the queue and wait for your turn
                 const ticket = this.#animationQueue.join();
                 await this.#animationQueue.waitForMyTurn(ticket);
 
-                // プレイスホルダー要素を作成
+                // Create a placeholder element
                 const placeholderListItem = AnimatedListView.#createEmptyRow();
                 placeholderListItem.classList.add('row-expanding');
                 placeholderListItem.style.height = '0px';
 
-                // プレイスホルダー要素を挿入位置に追加
+                // Add the placeholder element at the insertion position
                 this.#container.insertBefore(placeholderListItem, refElement);
 
-                // DOMが更新されるのを待つ
+                // Wait for the DOM to update
                 await new Promise(resolve => {
                     requestAnimationFrame(() => resolve());
                 });
 
-                //トランジションの時間を取得
+                // Get the transition duration
                 var durationTransition = AnimatedListView.#getTransitionDuration(placeholderListItem);
 
-                // プレイスホルダー要素の高さを設定してトランジションを開始
+                // Set the height of the placeholder element and start the transition
                 placeholderListItem.style.height = this.#itemHeight + 'px';
 
-                // トランジションが完了するのを待つ
+                // Wait for the transition to complete
                 await new Promise(resolve => {
                     setTimeout(resolve, durationTransition);
                 });
 
-                // 実際の要素でプレイスホルダー要素を置き換え
+                // Replace the placeholder element with the actual element
                 item.node.classList.add('appearing');
                 this.#container.replaceChild(item.node, placeholderListItem);
 
-                // アニメーション時間を取得
+                // Get the animation duration
                 var durationAnimation = AnimatedListView.#getAnimationDuration(item.node);
 
-                // アニメーションが完了するのを待つ
+                // Wait for the animation to complete
                 return new Promise(resolve => {
                     setTimeout(() => {
-                        // アニメーションを終了
+                        // End the animation
                         item.node.classList.remove('appearing');
-                        // 待ち行列から離脱
+                        // Leave the queue
                         this.#animationQueue.leave(ticket);
-                        // 解決
+                        // Resolve
                         resolve();
                     }, durationAnimation);
                 });
             }
 
             /**
-             * 指定した位置の要素を削除
-             * @param {number} position 削除する要素の位置
-             * @returns {Promise} アニメーションが完了するまでのPromise
+             * Remove the element at the specified position
+             * @param {number} position The position of the element to remove
+             * @returns {Promise} A promise that resolves when the animation is complete
              */
             async remove(position) {
-                // 位置を有効範囲内に制限
+                // Restrict the position to the valid range
                 position = Math.max(0, Math.min(position, this.#items.length - 1));
 
-                // 削除する要素を取得
+                // Get the element to remove
                 const itemToRemove = this.#items[position].node;
                 const itemHeight = itemToRemove.offsetHeight;
 
-                // 項目リストを更新
+                // Update the item list
                 this.#items.splice(position, 1);
 
-                // 待ち行列に参加して自分の番を待つ
+                // Join the queue and wait for your turn
                 const ticket = this.#animationQueue.join();
                 await this.#animationQueue.waitForMyTurn(ticket);
 
-                // 要素を消滅させる
+                // Fade out the element
                 itemToRemove.classList.add('disappearing');
 
-                // アニメーション時間を取得
+                // Get the animation duration
                 var animationDuration = AnimatedListView.#getAnimationDuration(itemToRemove);
 
-                // フェードアウトを待つ
+                // Wait for the fade-out to complete
                 await new Promise(resolve => {
                     setTimeout(resolve, animationDuration);
                 });
 
-                //　削除対象の要素をプレイスホルダー要素に置き換え
+                // Replace the element to be removed with a placeholder element
                 const placeholderListItem = AnimatedListView.#createEmptyRow();
                 placeholderListItem.classList.add('row-collapsing');
                 placeholderListItem.style.height = itemHeight + 'px';
                 this.#container.replaceChild(placeholderListItem, itemToRemove);
 
-                // DOMが更新されるのを待つ
+                // Wait for the DOM to update
                 await new Promise(resolve => {
                     requestAnimationFrame(() => resolve());
                 });
 
-                //トランジションの時間を取得
+                // Get the transition duration
                 var durationTransition = AnimatedListView.#getTransitionDuration(placeholderListItem);
 
-                // プレイスホルダー要素の高さを0にしてトランジションを開始
+                // Set the height of the placeholder element to 0 and start the transition
                 placeholderListItem.style.height = '0px';
 
-                // トランジションが完了するのを待つ
+                // Wait for the transition to complete
                 await new Promise(resolve => {
                     setTimeout(resolve, durationTransition);
                 });
 
-                // プレイスホルダー要素を削除
+                // Remove the placeholder element
                 this.#container.removeChild(placeholderListItem);
 
-                // 待ち行列から離脱
+                // Leave the queue
                 this.#animationQueue.leave(ticket);
 
                 return Promise.resolve();
             }
 
             /**
-             * 指定した位置の要素を移動
-             * @param {number} fromPosition 移動元の位置
-             * @param {number} toPosition 移動先の位置
-             * @returns {Promise} アニメーションが完了するまでのPromise
+             * Move the element from one position to another
+             * @param {number} fromPosition The position to move from
+             * @param {number} toPosition The position to move to
+             * @returns {Promise} A promise that resolves when the animation is complete
              */
             async move(fromPosition, toPosition) {
-                // 位置を有効範囲内に制限
+                // Restrict the positions to the valid range
                 fromPosition = Math.max(0, Math.min(fromPosition, this.#items.length - 1));
                 toPosition = Math.max(0, Math.min(toPosition, this.#items.length - 1));
 
-                // 移動元と移動先が同じ場合は何もしない
+                // If the source and destination positions are the same, do nothing
                 if (fromPosition === toPosition) {
                     return Promise.resolve();
                 }
 
-                // 項目リストを現時点の並び順でバックアップ
-                // これはリスト更新以降にアニメーションを行うため
+                // Backup the item list in the current order
+                // This is for performing animations after updating the list
                 let itemsBackup = this.#items.slice();
 
-                // 項目リストを更新
+                // Update the item list
                 if (fromPosition < toPosition) {
-                    // from < to の場合、先に削除してから挿入
+                    // If from < to, remove first and then insert
                     this.#items.splice(toPosition, 0, this.#items.splice(fromPosition, 1)[0]);
                 } else {
-                    // to < from の場合、挿入位置を調整してから削除
+                    // If to < from, adjust the insertion position and then remove
                     const item = this.#items.splice(fromPosition, 1)[0];
                     this.#items.splice(toPosition, 0, item);
                 }
 
-                // 待ち行列に参加して自分の番を待つ
+                // Join the queue and wait for your turn
                 const ticket = this.#animationQueue.join();
                 await this.#animationQueue.waitForMyTurn(ticket);
 
-                // 上下のトランジションの誤差でリストの前後がガタつくのを防ぐため、
-                // 対象領域内の要素を一旦仮設コンテナに移動し、その中でアニメーションを行う。
-                // その後、仮設コンテナから元の位置に戻す。
+                // To prevent the list from jittering due to transition discrepancies,
+                // move the elements in the target range to a temporary container,
+                // perform animations within the container, and then move them back to their original positions.
 
-                // 対象領域の範囲を計算
+                // Calculate the range of the target area
                 var rangeBegin = Math.min(fromPosition, toPosition);
                 var rangeEnd = Math.max(fromPosition, toPosition);
 
-                // 移動対象の要素を取得
+                // Get the element to move
                 const itemToMove = itemsBackup[fromPosition].node;
                 const itemHeight = itemToMove.offsetHeight;
 
-                // 対象領域の先頭の要素を取得
+                // Get the first element in the target range
                 const refElement = itemsBackup[rangeBegin].node;
 
-                // 仮設コンテナを作成して対象領域の先頭に挿入
+                // Create a temporary container and insert it at the beginning of the target range
                 const fixedContainer = document.createElement('div');
                 fixedContainer.classList.add('fixed-container');
                 this.#container.insertBefore(fixedContainer, refElement);
 
-                // 仮設コンテナに要素を移動
-                let totalHeight = 0; // 高さの合計
+                // Move elements to the temporary container
+                let totalHeight = 0; // Total height
                 for (let i = rangeBegin; i <= rangeEnd; i++) {
                     const item = itemsBackup[i].node;
-                    // 高さを計算して合計に加算
+                    // Calculate the height and add it to the total
                     totalHeight += item.offsetHeight;
-                    // アイテムを仮設コンテナに移動
+                    // Move the item to the temporary container
                     this.#container.removeChild(item);
                     fixedContainer.appendChild(item);
                 }
 
-                // 仮設コンテナの高さを設定
+                // Set the height of the temporary container
                 fixedContainer.style.height = `${totalHeight}px`;
 
-                // 移動対象の要素に引き抜きアニメーションを適用
+                // Apply the extraction animation to the element to move
                 itemToMove.classList.add('extracted');
 
-                // アニメーション時間を取得
+                // Get the animation duration
                 var animationDuration = AnimatedListView.#getAnimationDuration(itemToMove);
 
-                // アニメーションが完了するのを待つ
+                // Wait for the animation to complete
                 await new Promise(resolve => {
                     setTimeout(resolve, animationDuration);
                 });
 
-                // アニメーションを終了
+                // End the animation
                 itemToMove.classList.remove('extracted');
 
                 var placeholderFrom = AnimatedListView.#createEmptyRow();
@@ -563,78 +563,78 @@
                 placeholderTo.classList.add('row-expanding');
                 placeholderTo.style.height = '0px';
 
-                // 移動元の要素をプレイスホルダー要素に置き換え
+                // Replace the source element with a placeholder element
                 fixedContainer.replaceChild(placeholderFrom, itemToMove);
 
-                // 移動先のfixedContainer内の位置を計算
+                // Calculate the position within the fixedContainer for the destination
                 let insertPosition;
                 if (fromPosition < toPosition) {
-                    // from < to の場合、挿入位置を1つ後ろに調整
+                    // If from < to, adjust the insertion position by one
                     insertPosition = toPosition - rangeBegin + 1;
                 } else {
-                    // to < from の場合、そのまま計算
+                    // If to < from, calculate directly
                     insertPosition = toPosition - rangeBegin;
                 }
 
-                // 移動先にプレイスホルダー要素を挿入
+                // Insert the placeholder element at the destination
                 fixedContainer.insertBefore(placeholderTo, fixedContainer.children[insertPosition]);
 
-                // DOMが更新されるのを待つ
+                // Wait for the DOM to update
                 await new Promise(resolve => {
                     requestAnimationFrame(() => resolve());
                 });
 
-                // トランジションの時間を取得
+                // Get the transition duration
                 var durationTransition = AnimatedListView.#getTransitionDuration(placeholderTo);
 
-                // プレイスホルダー要素の高さを設定してトランジションを開始
+                // Set the height of the placeholder elements and start the transition
                 placeholderTo.style.height = itemHeight + 'px';
                 placeholderFrom.style.height = '0px';
 
-                // トランジションが完了するのを待つ
+                // Wait for the transition to complete
                 await new Promise(resolve => {
                     setTimeout(resolve, durationTransition);
                 });
 
-                // 移動先のプレイスホルダー要素を実際の要素に置き換え
+                // Replace the destination placeholder element with the actual element
                 fixedContainer.replaceChild(itemToMove, placeholderTo);
                 itemToMove.classList.add('inserting');
 
-                // 移動元のプレイスホルダー要素を削除
+                // Remove the source placeholder element
                 fixedContainer.removeChild(placeholderFrom);
 
-                // アニメーション時間を取得
+                // Get the animation duration
                 var durationAnimation = AnimatedListView.#getAnimationDuration(itemToMove);
 
-                // アニメーションが完了するのを待つ
+                // Wait for the animation to complete
                 await new Promise(resolve => {
                     setTimeout(resolve, durationAnimation);
                 });
 
-                // アニメーションを終了
+                // End the animation
                 itemToMove.classList.remove('inserting');
 
-                // 仮設コンテナから中身を出す
+                // Remove the contents from the temporary container
                 while (fixedContainer.firstChild) {
-                    // 子要素を取り出して仮設コンテナの前に挿入
+                    // Remove the child element and insert it before the temporary container
                     const item = fixedContainer.firstChild;
                     fixedContainer.removeChild(item);
                     this.#container.insertBefore(item, fixedContainer);
                 }
 
-                // 仮設コンテナを削除
+                // Remove the temporary container
                 this.#container.removeChild(fixedContainer);
 
-                // 待ち行列から離脱
+                // Leave the queue
                 this.#animationQueue.leave(ticket);
 
                 return Promise.resolve();
             }
 
             /**
-             * 指定した位置の要素を取得
-             * @param {number} position 取得する要素の位置
-             * @returns {HTMLElement|null} 取得した要素、またはnull（位置が無効な場合）
+             * Get the element at the specified position
+             * @param {number} position The position of the element to get
+             * @returns {HTMLElement|null} The element, or null if the position is invalid
              */
             getElement(position) {
                 if (position >= 0 && position < this.#items.length) {
@@ -644,50 +644,50 @@
             }
 
             /**
-             * リストの項目数を取得
-             * @returns {number} リストの項目数
+             * Get the number of items in the list
+             * @returns {number} The number of items in the list
              */
             getCount() {
                 return this.#items.length;
             }
 
             /**
-             * アニメーションの時間を取得するユーティリティ関数
-             * @param {HTMLElement} element アニメーションの対象要素
-             * @returns {number} アニメーションの時間（ミリ秒）
+             * Utility function to get the animation duration
+             * @param {HTMLElement} element The element to get the animation duration for
+             * @returns {number} The animation duration in milliseconds
              */
             static #getAnimationDuration(element) {
                 return parseFloat(getComputedStyle(element).animationDuration) * 1000;
             }
 
             /**
-             * トランジションの時間を取得するユーティリティ関数
-             * @param {HTMLElement} element トランジションの対象要素
-             * @returns {number} トランジションの時間（ミリ秒）
+             * Utility function to get the transition duration
+             * @param {HTMLElement} element The element to get the transition duration for
+             * @returns {number} The transition duration in milliseconds
              */
             static #getTransitionDuration(element) {
                 return parseFloat(getComputedStyle(element).transitionDuration) * 1000;
             }
 
             /**
-             * プレースホルダー要素を作成するユーティリティ関数
-             * @param {HTMLElement} node プレースホルダー要素の内容
-             * @returns {HTMLElement} 作成されたプレースホルダー要素
+             * Utility function to create a placeholder element
+             * @param {HTMLElement} node The content of the placeholder element
+             * @returns {HTMLElement} The created placeholder element
              */
             #createListItem(node) {
-                // div要素を作成
+                // Create a div element
                 const listItem = document.createElement('div');
 
-                // リスト項目のクラスを追加
+                // Add the list item class
                 listItem.classList.add('list-item');
 
-                // リスト項目の内容を追加
+                // Add the content of the list item
                 listItem.appendChild(node);
 
-                // 選択可能な場合、クリックイベントを追加
+                // If selectable, add a click event
                 if (this.#isSelectable) {
-                    listItem.onclick = () => { // クリックイベントを処理
-                        // 自分に選択状態を付与、他の要素からは選択状態を削除
+                    listItem.onclick = () => { // Handle the click event
+                        // Add the selected state to itself, remove the selected state from other elements
                         this.#items.forEach(item => {
                             if (item.node === listItem) {
                                 item.node.classList.add('selected');
@@ -696,7 +696,7 @@
                             }
                         });
 
-                        // 選択状態が変更されたときのコールバックを呼び出す
+                        // Call the callback when the selection state changes
                         if (this.#selectionChangedCallback) {
                             this.#selectionChangedCallback(listItem);
                         }
@@ -707,9 +707,9 @@
             }
 
             /**
-             * リスト項目を作成するユーティリティ関数
-             * @param {HTMLElement} node リスト項目の内容
-             * @returns {Object} 作成されたリスト項目オブジェクト
+             * Utility function to create a list item
+             * @param {HTMLElement} node The content of the list item
+             * @returns {Object} The created list item object
              */
             #createItem(node){
                 return {
@@ -719,8 +719,8 @@
             }
 
             /**
-             * 空の行を作成するユーティリティ関数
-             * @returns {HTMLElement} 作成された空の行要素
+             * Utility function to create an empty row
+             * @returns {HTMLElement} The created empty row element
              */
             static #createEmptyRow() {
                 const item = document.createElement('div');
@@ -730,10 +730,10 @@
             }
 
             /**
-             * 左右のパディングを持つテキスト要素を作成するユーティリティ関数
-             * @param {string} text テキスト内容
-             * @param {number} padding 左右のパディングのサイズ
-             * @returns {HTMLElement} 作成されたテキスト要素
+             * Utility function to create a text element with side padding
+             * @param {string} text The text content
+             * @param {number} padding The size of the side padding
+             * @returns {HTMLElement} The created text element
              */
             static createTextItemWithSidePadding(text, padding = 0) {
                 const node = document.createElement('div');
@@ -743,43 +743,43 @@
             }
            
             /**
-             * 内部クラス: TicketQueue
-             * 整理券方式の待ち行列を実装するクラス
-             * - 行列に参加して整理券を取得する(join)
-             * - 先頭が自分の番かどうかを判定する(isMyTurn)
-             * - 整理券を返却して待ち行列から離脱する(leave)
-             * - 自分の番が来るまで非同期で待機する(waitForMyTurn)
+             * Inner class: TicketQueue
+             * A class that implements a ticket-based waiting queue
+             * - Join the queue and get a ticket (join)
+             * - Check if it's your turn (isMyTurn)
+             * - Return the ticket and leave the queue (leave)
+             * - Wait asynchronously until it's your turn (waitForMyTurn)
              */
             static #TicketQueue = class {
-                #queue;         // 整理券を格納する配列
-                #ticketCounter; // 整理券番号を生成のためのカウンター
-                #waiters;       // 待機中のPromiseを管理（ticket -> resolver）
+                #queue;         // Array to store tickets
+                #ticketCounter; // Counter to generate ticket numbers
+                #waiters;       // Manage waiting promises (ticket -> resolver)
 
                 /**
-                 * コンストラクタ
+                 * Constructor
                  */
                 constructor() {
-                    this.#queue = []; // 整理券を格納する配列
-                    this.#ticketCounter = 0; // 整理券番号を生成のためのカウンター
-                    this.#waiters = new Map(); // 待機中のPromiseを管理（ticket -> resolver）
+                    this.#queue = []; // Array to store tickets
+                    this.#ticketCounter = 0; // Counter to generate ticket numbers
+                    this.#waiters = new Map(); // Manage waiting promises (ticket -> resolver)
                 }
 
                 /**
-                 * 待ち行列に参加して整理券を取得する
-                 * @returns {number} 整理券番号
+                 * Join the queue and get a ticket
+                 * @returns {number} The ticket number
                  */
                 join() {
-                    // 整理券番号を生成
+                    // Generate a ticket number
                     const ticket = this.#ticketCounter++;
-                    // 整理券を待ち行列に追加
+                    // Add the ticket to the queue
                     this.#queue.push(ticket);
                     return ticket;
                 }
 
                 /**
-                 * 自分の番かどうかを判定する
-                 * @param {number} ticket 整理券番号
-                 * @returns {boolean} 自分の番かどうか
+                 * Check if it's your turn
+                 * @param {number} ticket The ticket number
+                 * @returns {boolean} Whether it's your turn
                  */
                 isMyTurn(ticket) {
                     if (this.#queue.length === 0) {
@@ -789,9 +789,9 @@
                 }
 
                 /**
-                 * 整理券を返却して待ち行列から離脱する
-                 * @param {number} ticket 整理券番号
-                 * @returns {number} 離脱した整理券番号
+                 * Return the ticket and leave the queue
+                 * @param {number} ticket The ticket number
+                 * @returns {number} The ticket number that left the queue
                  */
                 leave(ticket) {
                     if (this.#queue.length === 0) {
@@ -800,14 +800,14 @@
                     if (this.#queue[0] !== ticket) {
                         throw new Error("Ticket does not match the front of the queue");
                     }
-                    // 先頭の整理券を削除
+                    // Remove the ticket at the front
                     const removedTicket = this.#queue.shift();
 
-                    // 次の待機者に通知
+                    // Notify the next waiter
                     if (this.#queue.length > 0) {
-                        // 先頭の整理券を取得
+                        // Get the next ticket at the front
                         const nextTicket = this.#queue[0];
-                        // 次の整理券を持つ者が待機している場合、Promiseを解決
+                        // If the next ticket has a waiting promise, resolve it
                         const resolver = this.#waiters.get(nextTicket);
                         if (resolver) {
                             resolver(nextTicket);
@@ -818,16 +818,16 @@
                 }
 
                 /**
-                 * 自分の番が来るまで非同期で待機する
-                 * @param {number} ticket 整理券番号
-                 * @returns {Promise<number>} 自分の番が来たときの整理券番号
+                 * Wait asynchronously until it's your turn
+                 * @param {number} ticket The ticket number
+                 * @returns {Promise<number>} The ticket number when it's your turn
                  */
                 async waitForMyTurn(ticket) {
                     if (this.isMyTurn(ticket)) {
-                        return ticket; // すでに先頭なら即時解決
+                        return ticket; // If already at the front, resolve immediately
                     }
 
-                    // Promiseを作成し、待機リストに登録
+                    // Create a promise and register it in the waiting list
                     return new Promise(resolve => {
                         this.#waiters.set(ticket, resolve);
                     });
@@ -835,65 +835,65 @@
             };
         }
 
-        // デモンストレーション用のコード
+        // Demonstration code
         document.addEventListener('DOMContentLoaded', () => {
             const listView = new AnimatedListView(
                 containerId = 'listView', 
                 isSelectable = true,
                 selectionChangedCallback = (selectedItem) => {
-                    updateStatus(`選択されたアイテム: ${selectedItem.textContent}`);
+                    updateStatus(`Selected item: ${selectedItem.textContent}`);
                 }
             );
             const statusElement = document.getElementById('status');
             let itemCounter = 1;
 
             function updateStatus(message) {
-                statusElement.textContent = `ステータス: ${message}`;
+                statusElement.textContent = `Status: ${message}`;
             }
 
-            // 追加ボタン
+            // Add button
             document.getElementById('addBtn').addEventListener('click', async () => {
-                updateStatus('追加中...');
-                const node = AnimatedListView.createTextItemWithSidePadding(`アイテム ${itemCounter++}`, 15);
+                updateStatus('Adding...');
+                const node = AnimatedListView.createTextItemWithSidePadding(`Item ${itemCounter++}`, 15);
                 await listView.add(node);
-                updateStatus(`追加完了。アイテム数: ${listView.getCount()}`);
+                updateStatus(`Add complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
 
-            // 挿入ボタン
+            // Insert button
             document.getElementById('insertBtn').addEventListener('click', async () => {
                 const position = parseInt(document.getElementById('insertPos').value);
-                updateStatus(`位置 ${position} に挿入中...`);
-                const node = AnimatedListView.createTextItemWithSidePadding(`挿入アイテム ${itemCounter++}`, 15);
+                updateStatus(`Inserting at position ${position}...`);
+                const node = AnimatedListView.createTextItemWithSidePadding(`Inserted Item ${itemCounter++}`, 15);
                 await listView.insert(node, position);
-                updateStatus(`挿入完了。アイテム数: ${listView.getCount()}`);
+                updateStatus(`Insert complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
 
-            // 削除ボタン
+            // Remove button
             document.getElementById('removeBtn').addEventListener('click', async () => {
                 const position = parseInt(document.getElementById('removePos').value);
                 if (listView.getCount() === 0) {
-                    updateStatus('削除するアイテムがありません。');
+                    updateStatus('No items to remove.');
                     return;
                 }
-                updateStatus(`位置 ${position} のアイテムを削除中...`);
+                updateStatus(`Removing item at position ${position}...`);
                 await listView.remove(position);
-                updateStatus(`削除完了。アイテム数: ${listView.getCount()}`);
+                updateStatus(`Remove complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
 
-            // 移動ボタン
+            // Move button
             document.getElementById('moveBtn').addEventListener('click', async () => {
                 const fromPosition = parseInt(document.getElementById('moveFrom').value);
                 const toPosition = parseInt(document.getElementById('moveTo').value);
                 if (listView.getCount() <= 1) {
-                    updateStatus('移動するアイテムが不足しています。');
+                    updateStatus('Not enough items to move.');
                     return;
                 }
-                updateStatus(`位置 ${fromPosition} から ${toPosition} に移動中...`);
+                updateStatus(`Moving from position ${fromPosition} to ${toPosition}...`);
                 await listView.move(fromPosition, toPosition);
-                updateStatus(`移動完了。アイテム数: ${listView.getCount()}`);
+                updateStatus(`Move complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
 
@@ -904,12 +904,12 @@
                 }
             }
 
-            // 初期アイテムを追加
+            // Add initial items
             (async () => {
                 for (let i = 0; i < 5; i++) {
-                    await listView.add(AnimatedListView.createTextItemWithSidePadding(`初期アイテム ${itemCounter++}`, 15));
+                    await listView.add(AnimatedListView.createTextItemWithSidePadding(`Initial Item ${itemCounter++}`, 15));
                 }
-                updateStatus(`準備完了。アイテム数: ${listView.getCount()}`);
+                updateStatus(`Ready. Item count: ${listView.getCount()}`);
             })();
         });
     </script>
