@@ -108,6 +108,7 @@
             <button id="moveBtn">Move</button>
             <input type="number" id="moveFrom" min="0" value="0" placeholder="From Position">
             <input type="number" id="moveTo" min="0" value="1" placeholder="To Position">
+            <button id="clearBtn">Clear</button>
         </div>
 
         <div id="listView">
@@ -176,6 +177,14 @@
                 updateStatus(`Moving from position ${fromPosition} to ${toPosition}...`);
                 await listView.move(fromPosition, toPosition);
                 updateStatus(`Move complete. Item count: ${listView.getCount()}`);
+                dumpList();
+            });
+
+            // Clear button
+            document.getElementById('clearBtn').addEventListener('click', async () => {
+                updateStatus('Clearing all items...');
+                await listView.clear();
+                updateStatus('Clear complete. Item count: ${listView.getCount()}');
                 dumpList();
             });
 

@@ -419,6 +419,48 @@ class AnimatedListView {
     }
 
     /**
+     * Clear the list
+     * @returns {Promise} A promise that resolves when the animation is complete
+     */
+    async clear() {
+        if (this.#items.length === 0) {
+            return Promise.resolve(); // No items to clear
+        }
+
+        // Update the item list
+        this.#items = [];
+
+        // Join the queue and wait for your turn
+        const ticket = this.#animationQueue.join();
+        await this.#animationQueue.waitForMyTurn(ticket);
+
+        // Apply disappearing animation to all items
+        var itemToMeasure = null;
+        this.#container.childNodes.forEach(item => {
+            if ( item.nodeType === Node.ELEMENT_NODE && item.classList.contains('listview-item')) {
+                item.classList.add('disappearing');
+                itemToMeasure = item;
+            }
+        });
+
+        // Get the animation duration
+        const animationDuration = AnimatedListView.#getAnimationDuration(itemToMeasure);
+
+        // Wait for the animation to complete
+        await new Promise(resolve => {
+            setTimeout(resolve, animationDuration);
+        });
+
+        // Remove all items from the container
+        this.#container.innerHTML = '';
+
+        // Leave the queue
+        this.#animationQueue.leave(ticket);
+
+        return Promise.resolve();
+    }
+
+    /**
      * Get the element at the specified position
      * @param {number} position The position of the element to get
      * @returns {HTMLElement|null} The element, or null if the position is invalid
