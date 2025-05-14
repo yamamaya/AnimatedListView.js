@@ -122,6 +122,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize the AnimatedListView
             const listView = new AnimatedListView(
                 containerId = 'listView', 
                 isSelectable = true,
@@ -129,47 +130,62 @@
                     updateStatus(`Selected item: ${selectedItem.textContent}`);
                 }
             );
+
+            // Set the initial status
             const statusElement = document.getElementById('status');
             let itemCounter = 1;
 
+            // Function to update the status message
             function updateStatus(message) {
                 statusElement.textContent = `Status: ${message}`;
             }
 
             // Add button
             document.getElementById('addBtn').addEventListener('click', async () => {
+                // Set the status message
                 updateStatus('Adding...');
+                // Create a new item
                 const node = AnimatedListView.createTextItemWithSidePadding(`Item ${itemCounter++}`, 15);
+                // Add the item to the list view
                 await listView.add(node);
+                // Update the status message
                 updateStatus(`Add complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
 
             // Insert button
             document.getElementById('insertBtn').addEventListener('click', async () => {
+                // Get the position to insert at
                 const position = parseInt(document.getElementById('insertPos').value);
                 updateStatus(`Inserting at position ${position}...`);
+                // Create a new item
                 const node = AnimatedListView.createTextItemWithSidePadding(`Inserted Item ${itemCounter++}`, 15);
+                // Insert the item at the specified position
                 await listView.insert(node, position);
+                // Update the status message
                 updateStatus(`Insert complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
 
             // Remove button
             document.getElementById('removeBtn').addEventListener('click', async () => {
+                // Get the position to remove from
                 const position = parseInt(document.getElementById('removePos').value);
                 if (listView.getCount() === 0) {
                     updateStatus('No items to remove.');
                     return;
                 }
                 updateStatus(`Removing item at position ${position}...`);
+                // Remove the item at the specified position
                 await listView.remove(position);
+                // Update the status message
                 updateStatus(`Remove complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
 
             // Move button
             document.getElementById('moveBtn').addEventListener('click', async () => {
+                // Get the positions to move from and to
                 const fromPosition = parseInt(document.getElementById('moveFrom').value);
                 const toPosition = parseInt(document.getElementById('moveTo').value);
                 if (listView.getCount() <= 1) {
@@ -177,7 +193,9 @@
                     return;
                 }
                 updateStatus(`Moving from position ${fromPosition} to ${toPosition}...`);
+                // Move the item from the specified position to another
                 await listView.move(fromPosition, toPosition);
+                // Update the status message
                 updateStatus(`Move complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
@@ -185,11 +203,14 @@
             // Clear button
             document.getElementById('clearBtn').addEventListener('click', async () => {
                 updateStatus('Clearing all items...');
+                // Clear all items from the list view
                 await listView.clear();
+                // Update the status message
                 updateStatus(`Clear complete. Item count: ${listView.getCount()}`);
                 dumpList();
             });
 
+            // Function to dump the list items to the console
             function dumpList() {
                 console.log('----- dumpList -----');
                 for (let i = 0; i < listView.getCount(); i++) {
@@ -199,11 +220,14 @@
 
             // Add initial items
             (async () => {
+                // Elements to be added
                 let elements = [];
                 for (let i = 0; i < 5; i++) {
                     elements.push(AnimatedListView.createTextItemWithSidePadding(`Initial Item ${itemCounter++}`, 15));
                 }
+                // Add the elements to the list view
                 await listView.addMultiple(elements);
+                // Update the status message
                 updateStatus(`Ready. Item count: ${listView.getCount()}`);
             })();
         });
