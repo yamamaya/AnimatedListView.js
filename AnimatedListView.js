@@ -82,6 +82,52 @@ class AnimatedListView {
     }
 
     /**
+     * Add multiple elements to the end of the list with a single animation
+     * @param {HTMLElement[]} elements The array of elements to add
+     * @returns {Promise} A promise that resolves when the animation is complete
+     */
+    async addMultiple(elements) {
+        if (elements.length === 0) {
+            return Promise.resolve(); // No elements to add
+        }
+
+        // Create items for all elements
+        const items = elements.map(element => this.#createItem(element));
+
+        // Update the item list
+        this.#items.push(...items);
+
+        // Join the queue and wait for your turn
+        const ticket = this.#animationQueue.join();
+        await this.#animationQueue.waitForMyTurn(ticket);
+
+        // Create a document fragment to batch DOM updates
+        const fragment = document.createDocumentFragment();
+        items.forEach(item => {
+            item.node.classList.add('appearing');
+            fragment.appendChild(item.node);
+        });
+
+        // Add all items to the container at once
+        this.#container.appendChild(fragment);
+
+        // Get the animation duration (assume all items have the same duration)
+        const animationDuration = AnimatedListView.#getAnimationDuration(items[0].node);
+
+        // Wait for the animation to complete
+        return new Promise(resolve => {
+            setTimeout(() => {
+                // End the animation for all items
+                items.forEach(item => item.node.classList.remove('appearing'));
+                // Leave the queue
+                this.#animationQueue.leave(ticket);
+                // Resolve
+                resolve();
+            }, animationDuration);
+        });
+    }
+
+    /**
      * Insert the specified element at the specified position
      * @param {HTMLElement} element The element to insert
      * @param {number} position The position to insert at

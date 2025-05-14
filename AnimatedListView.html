@@ -188,9 +188,11 @@
 
             // Add initial items
             (async () => {
+                let elements = [];
                 for (let i = 0; i < 5; i++) {
-                    await listView.add(AnimatedListView.createTextItemWithSidePadding(`Initial Item ${itemCounter++}`, 15));
+                    elements.push(AnimatedListView.createTextItemWithSidePadding(`Initial Item ${itemCounter++}`, 15));
                 }
+                await listView.addMultiple(elements);
                 updateStatus(`Ready. Item count: ${listView.getCount()}`);
             })();
         });
