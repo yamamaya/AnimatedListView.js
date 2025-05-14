@@ -30,7 +30,7 @@ const listView = new AnimatedListView('listView');
 
 ## Example
 
-Check out the [https://yamamaya.github.io/AnimatedListView.js/example.html](example.html) file for a working demo.
+Check out the [https://yamamaya.github.io/AnimatedListView.js/example.html](https://yamamaya.github.io/AnimatedListView.js/example.html) file for a working demo.
 
 ## License
 
