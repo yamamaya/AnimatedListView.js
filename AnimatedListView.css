@@ -70,8 +70,7 @@
 .listview-container .row-expanding {
     overflow: hidden;
     transition-property: height;
-    transition-duration: 0.5s;
-    /* Transition duration (same as .row-collapsing) */
+    transition-duration: 0.5s; /* Transition duration (should be same as .row-collapsing) */
     transition-timing-function: ease;
     background-color: transparent;
     background-image: none;
@@ -81,8 +80,7 @@
 .listview-container .row-collapsing {
     overflow: hidden;
     transition-property: height;
-    transition-duration: 0.5s;
-    /* Transition duration (same as .row-expanding) */
+    transition-duration: 0.5s; /* Transition duration (should be same as .row-expanding) */
     transition-timing-function: ease;
     background-color: transparent;
     background-image: none;
